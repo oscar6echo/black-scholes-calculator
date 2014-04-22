@@ -4,5 +4,5 @@ The [Black Scholes formula](http://en.wikipedia.org/wiki/Black%E2%80%93Scholes_m
 
 This is a simple calculator with a 2D / 3D viewer to help understand the sensitivities of such option price to the formula inputs.
 
-Based on [highchart](http://www.highcharts.com/) for the 2D viewer, and [Almende graph3d](http://almende.github.io/chap-links-library/graph3d.html) for the 3D viewer.
+Based on [highcharts](http://www.highcharts.com/) for the 2D viewer, and [Almende graph3d](http://almende.github.io/chap-links-library/graph3d.html) for the 3D viewer.
 
