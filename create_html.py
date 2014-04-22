@@ -9,8 +9,7 @@ title = """
 """
 
 # --------------------------------------------------------------------------------------------------------
-input_table_template = """
-
+pre_input_template = """
 <table id="preinput">
 	<thead>
 		<tr>
@@ -36,7 +35,13 @@ input_table_template = """
 		</tr>
 	</tbody>
 </table>
+"""
 
+HTML_pre_input = pre_input_template
+print HTML_pre_input
+
+# --------------------------------------------------------------------------------------------------------
+input_template = """
 <table id="input">
 	<thead>
 		<tr>
@@ -86,12 +91,11 @@ input_data = [
 	['q', 'q', '0', '-2', '5', '0.5', 'Div (%)']
 ]
 
-HTML_input = Environment().from_string(input_table_template).render(input_data=input_data)
+HTML_input = Environment().from_string(input_template).render(input_data=input_data)
 print HTML_input
 
 # -------------------------------------------------------------------------------------------------------
-output_table_template = """
-<p id="status">Status: Missing input</p>
+output_template = """
 <table id="output">
 	<thead>
 		<tr>
@@ -139,12 +143,12 @@ output_data = [
 	['PV_payoff', r"e^{-rT}Payoff"]
 ]
 
-HTML_output = Environment().from_string(output_table_template).render(output_data=output_data)
+HTML_output = Environment().from_string(output_template).render(output_data=output_data)
 print HTML_output
 
 
 # --------------------------------------------------------------------------------------------------------
-ref_table_template_1 = """
+ref_template_1 = """
 <br><br><br>
 <h4>Reference</h4>
 <table id="ref_1">
@@ -184,12 +188,12 @@ ref_data_1 = [
 	[r"Voma=\frac{\partial \nu}{\partial \sigma}", r"Se^{-qT}N'(d_1)\sqrt{T}\frac{d_1 d_2}{\sigma}"],
 ]
 
-HTML_ref_1 = Environment().from_string(ref_table_template_1).render(output_data=ref_data_1)
+HTML_ref_1 = Environment().from_string(ref_template_1).render(output_data=ref_data_1)
 print HTML_ref_1
 
 
 # --------------------------------------------------------------------------------------------------------
-ref_table_template_2 = """
+ref_template_2 = """
 <table id="ref_2">
 	{% for x in output_data %}
 	<tr>
@@ -207,7 +211,7 @@ ref_data_2 = [
 	[r"N'(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}"]
 ]
 
-HTML_ref_2 = Environment().from_string(ref_table_template_2).render(output_data=ref_data_2)
+HTML_ref_2 = Environment().from_string(ref_template_2).render(output_data=ref_data_2)
 print HTML_ref_2
 
 
@@ -218,17 +222,50 @@ viz_template = """
 <div id="viz3D"></div>
 """
 
-# --------------------------------------------------------------------------------------------------------
-start_row_div = """
-<div class="row">
+HTML_viz = viz_template
+
+status_template = """
+<p id="status">Status: Missing input</p>
 """
-end_row_div = """
+
+HTML_status = status_template
+
+# --------------------------------------------------------------------------------------------------------
+start_table_div = """
+<div class="display_like_table">
+"""
+start_row_div = """
+<div class="display_like_row">
+"""
+start_cell_div = """
+<div class="display_like_cell">
+"""
+end_div = """
 </div>
 """
 
 
 # --------------------------------------------------------------------------------------------------------
-HTML_content = title + HTML_input + start_row_div + HTML_output + viz_template + end_row_div + HTML_ref_1 + HTML_ref_2
+HTML_content = \
+	title + \
+	start_table_div + \
+		start_row_div + \
+			start_cell_div + HTML_pre_input + end_div + \
+			start_cell_div + HTML_input + end_div  + \
+		end_div + \
+		start_row_div + \
+			start_cell_div + ' ' + end_div + \
+			start_cell_div + HTML_status + end_div  + \
+		end_div + \
+		start_row_div + \
+			start_cell_div + HTML_output + end_div + \
+			start_cell_div + HTML_viz	 + end_div  + \
+		end_div + \
+	end_div + \
+	HTML_ref_1 + \
+	HTML_ref_2
+
+
 paperclip.copy(HTML_content)
 
 

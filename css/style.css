@@ -1,21 +1,5 @@
 
 
-#container {
-	width: 800px;
-	height: 300px;
-	margin: 10px;
-	background-color: lightyellow;
-}
-
-
-
-#p1 {
-	font-family: Arial;
-	font-size: 9px;
-	font-weight: 50;
-	color: gray;
-}
-
 
 body {
 	marin: auto;
@@ -44,56 +28,63 @@ td {
 	/*min-width: 40px;*/
 }
 
+.display_like_table {
+	display: table;
+	width: 1000px;
+}
+
+.display_like_row {
+	display: table-row;
+	vertical-align: middle;
+}
+
+.display_like_cell {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
 #preinput {
-	border: 1px solid gray;
 	margin: auto;
+	border: 1px solid gray;
 	background-color: #f3e3dc;
 }
 
 
 #input {
-	border: 1px solid gray;
 	margin: auto;
+	border: 1px solid gray;
 	margin-top: 5px;
 	background-color: #f3e3dc;
 }
 
-.row{
-	border: 0px solid gray;
-	height: auto;
-	overflow: auto;
-	width: 1000px;
-	margin: auto;
-}
 
 #output {
 	border: 1px solid gray;
-	float: left;
 	background-color: #f3e3dc;
+	display: inline-block;
 }
 
 #viz2D {
 	border: 0px solid gray;
-	float: right;
 	width: 740px;
 	height: 500px;
-	margin: 0px;
 	background-color: white;
+	display: inline-block;
 	display: none;
 }
 
 #viz3D {
 	border: 0px solid gray;
-	float: right;
 	width: 740px;
 	height: 500px;
-	margin: 0px;
 	background-color: white;
+	display: inline-block;
 	display: none;
 }
 
 #reference {
-	width: 100%;
+	width: 1000px;
 }
 
 #ref_1, #ref_2 {
