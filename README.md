@@ -1,6 +1,6 @@
 ## Black Scholes Calculator ##
 
-The [Black Scholes formula](http://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model) gives the theoretical price of a simple vanilla call or put option based on the a set of market parameters, as well as several derivatives of this price, known as the [Greeks](http://en.wikipedia.org/wiki/Greeks_(finance)).
+The [Black Scholes formula](http://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model) gives the theoretical price of a simple vanilla call or put option based on a set of market parameters, as well as several derivatives of this price, known as the [Greeks](http://en.wikipedia.org/wiki/Greeks_(finance)).
 
 This is a simple calculator with a 2D / 3D viewer to help understand the sensitivities of such option price to the formula inputs.
 
