@@ -196,7 +196,7 @@ function update_graph_2D(x, z, axis, array_price) {
 		}, false);
 
 
-	chart2D.redraw(true);
+	chart2D.redraw(false);
 
 }
 
