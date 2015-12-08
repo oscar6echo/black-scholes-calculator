@@ -48,7 +48,7 @@ function BS_Greeks_Call(input) {
 	q = input[5];
 
 	var sqrt_T = Math.sqrt(T),
-		d1 = (1 / (v *sqrt_T)) * (Math.log(S/K) + (r -q + v*v) * T),
+		d1 = (1 / (v *sqrt_T)) * (Math.log(S/K) + (r -q + v*v/2) * T),
 		d2 = d1 - v * sqrt_T,
 		N_d1 = N(d1),
 		N_prime_d1 = Nprime(d1),
@@ -86,7 +86,7 @@ function BS_Greeks_Put(input) {
 	q = input[5];
 
 	var sqrt_T = Math.sqrt(T),
-		d1 = (1 / (v *sqrt_T)) * (Math.log(S/K) + (r -q + v*v) * T),
+		d1 = (1 / (v *sqrt_T)) * (Math.log(S/K) + (r -q + v*v/2) * T),
 		d2 = d1 - v * sqrt_T,
 		N_minus_d1 = N(-d1),
 		N_prime_d1 = Nprime(d1),
