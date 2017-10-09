@@ -1,0 +1,142 @@
+/* Project typos */
+@Source: 'Source Sans Pro', Arial, sans-serif;
+
+/* Headings and body text */
+.title-1,
+.title-2,
+.title-3,
+.title-4,
+.title-5,
+.title-6,
+.body-1,
+.body-2 {
+	font-family: @Source;
+	line-height: 1.2em;
+}
+.title-1 {
+	font-size: 46px;
+}
+.title-2 {
+	font-size: 36px;
+}
+.title-3 {
+	font-size: 30px;
+}
+.title-4 {
+	font-size: 26px;
+}
+.title-5 {
+	font-size: 20px;
+}
+.title-6 {
+	font-size: 16px;
+	font-weight: bold;
+}
+.body-1 {
+	font-family: @Source;
+	font-size: 14px;
+}
+.body-2 {
+	font-size: 12px;
+}
+
+/* SG emphasis classes */
+.muted {}
+.reverse {}
+.primary {}
+.warning {}
+.danger {}
+.success {}
+.info {}
+.disclaimer {}
+
+/* Links */
+a {
+	.body-1();
+	color: @red-socgen;
+	text-decoration: none;
+	.pointer();
+
+	&:hover {
+		color: darken(@red-socgen, 20%);
+	}
+	&:focus,
+	&:active {
+		color: darken(@red-socgen, 40%);
+	}
+	&.inactive {
+		opacity: 0.3;
+	}
+}
+.dark-theme a {
+	color: @gray;
+
+	&:hover {
+		color: darken(@gray, 20%);
+	}
+	&:focus,
+	&:active {
+		color: darken(@gray, 40%);
+	}
+}
+
+/* Helpers */
+.uppercase {
+	text-transform: uppercase;
+}
+.capitalize {
+	text-transform: capitalize;
+}
+.hyphenate {
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+.no-select {
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;          /* Likely future */
+}
+
+/* Default HTML tags style */
+body, p, a, div, ul, li, span, input, textarea, select {
+	.body-1();
+	color: @gray-base;
+	.dark-theme & {
+		color: @blue-gray;
+	}
+}
+h1 {
+	.title-1();
+}
+h2 {
+	.title-2();
+}
+h3 {
+	.title-3();
+}
+h4 {
+	.title-4();
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+	margin: 5px 0;
+	text-align: center;
+	color: @gray-base;
+	.dark-theme & {
+		color: @blue-gray;
+	}
+}
+h3, h4 {
+	text-align: center;
+}
+tr td {
+	text-align: center;
+}
+p {
+	margin: 0.5em 0 0.5em;
+	word-wrap: break-word;
+	.hyphenate();
+}

@@ -1,12 +1,7 @@
 
 from jinja2 import Environment
-import paperclip
+import pyperclip
 
-
-# --------------------------------------------------------------------------------------------------------
-title = """
-<h4>Black Scholes Calculator</h4>
-"""
 
 # --------------------------------------------------------------------------------------------------------
 pre_input_template = """
@@ -38,7 +33,7 @@ pre_input_template = """
 """
 
 HTML_pre_input = pre_input_template
-print HTML_pre_input
+print(HTML_pre_input)
 
 # --------------------------------------------------------------------------------------------------------
 input_template = """
@@ -82,17 +77,18 @@ input_template = """
 
 
 input_data = [
-	# symbol, symbol latex, value, min value, max value, step, description
-	['S', 'S', '100', '0', '200', '1', 'Spot'],
-	['K', 'K', '100', '0', '200', '1', 'Strike'],
-	['T', 'T', '3', '0', '10', '0.1', 'Mat (y)'],
-	['v', '\sigma', '15', '0', '40', '1', 'Vol (%)'],
-	['r', 'r', '3', '-2', '10', '0.5', 'Rate (%)'],
-	['q', 'q', '0', '-2', '5', '0.5', 'Div (%)']
+    # symbol, symbol latex, value, min value, max value, step, description
+    ['S', 'S', '100', '0', '200', '1', 'Spot'],
+    ['K', 'K', '100', '0', '200', '1', 'Strike'],
+    ['T', 'T', '3', '0', '10', '0.1', 'Mat (y)'],
+    ['v', '\sigma', '15', '0', '40', '1', 'Vol (%)'],
+    ['r', 'r', '3', '-2', '10', '0.5', 'Rate (%)'],
+    ['q', 'q', '0', '-2', '5', '0.5', 'Div (%)']
 ]
 
-HTML_input = Environment().from_string(input_template).render(input_data=input_data)
-print HTML_input
+HTML_input = Environment().from_string(
+    input_template).render(input_data=input_data)
+print(HTML_input)
 
 # -------------------------------------------------------------------------------------------------------
 output_template = """
@@ -121,30 +117,31 @@ output_template = """
 """
 
 output_data = [
-	# css name, symbol latex
-	['d1', r"d_1"],
-	['N_d1_call', r"N(d_1)"],
-	['N_d1_put', r"N(-d_1)"],
-	['N_prime_d1', r"N'(d_1)"],
-	['d2', r"d_2"],
-	['N_d2_call', r"N(d_2)"],
-	['N_d2_put', r"N(-d_2)"],
-	['N_prime_d2', r"N'(d_2)"],
-	['PV', r"e^{-rT}"],
-	['PV_K', r"e^{-rT}K"],
-	['value', r"V"],
-	['delta', r"\Delta"],
-	['gamma', r"\Gamma"],
-	['vega', r"\nu"],
-	['theta', r"\Theta"],
-	['rho', r"\rho"],
-	['voma', r"voma"],
-	['payoff', r"Payoff"],
-	['PV_payoff', r"e^{-rT}Payoff"]
+    # css name, symbol latex
+    ['d1', r"d_1"],
+    ['N_d1_call', r"N(d_1)"],
+    ['N_d1_put', r"N(-d_1)"],
+    ['N_prime_d1', r"N'(d_1)"],
+    ['d2', r"d_2"],
+    ['N_d2_call', r"N(d_2)"],
+    ['N_d2_put', r"N(-d_2)"],
+    ['N_prime_d2', r"N'(d_2)"],
+    ['PV', r"e^{-rT}"],
+    ['PV_K', r"e^{-rT}K"],
+    ['value', r"V"],
+    ['delta', r"\Delta"],
+    ['gamma', r"\Gamma"],
+    ['vega', r"\nu"],
+    ['theta', r"\Theta"],
+    ['rho', r"\rho"],
+    ['voma', r"voma"],
+    ['payoff', r"Payoff"],
+    ['PV_payoff', r"e^{-rT}Payoff"]
 ]
 
-HTML_output = Environment().from_string(output_template).render(output_data=output_data)
-print HTML_output
+HTML_output = Environment().from_string(
+    output_template).render(output_data=output_data)
+print(HTML_output)
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -177,19 +174,27 @@ ref_template_1 = """
 """
 
 ref_data_1 = [
-	['Option', 'Call', 'Put'],
-	['Payoff', 'Max(0, S-K)', 'Max(0, K-S)'],
-	[r"Value=V", r"Se^{-qT}N(d_1)-Ke^{-rT}N(d_2)", r'Ke^{-rT}N(-d_2)-Se^{-qT}N(-d_1)'],
-	[r"\Delta=\frac{\partial V}{\partial S}", r"e^{-qT}N(d_1)", r'-e^{-qT}N(-d_1)'],
-	[r"\Gamma=\frac{\partial \Delta}{\partial S}", r"e^{-qT}\frac{N'(d_1)}{S\sigma\sqrt{T}}"],
-	[r"\nu=\frac{\partial V}{\partial \sigma}", r"Se^{-qT}N'(d_1)\sqrt{T}=Ke^{-rT}N'(d_2)\sqrt{T}"],
-	[r"\Theta=-\frac{\partial V}{\partial T}", r"-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}-rKe^{-rT}N(d_2)+qSe^{-qT}N(d_1)", r"-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}+rKe^{-rT}N(-d_2)-qSe^{-qT}N(-d_1)"],
-	[r"\rho=\frac{\partial V}{\partial r}", r"KTe^{-rT}N(d_2)", r"-KTe^{-rT}N(-d_2)"],
-	[r"Voma=\frac{\partial \nu}{\partial \sigma}", r"Se^{-qT}N'(d_1)\sqrt{T}\frac{d_1 d_2}{\sigma}"],
+    ['Option', 'Call', 'Put'],
+    ['Payoff', 'Max(0, S-K)', 'Max(0, K-S)'],
+    [r"Value=V", r"Se^{-qT}N(d_1)-Ke^{-rT}N(d_2)",
+     r'Ke^{-rT}N(-d_2)-Se^{-qT}N(-d_1)'],
+    [r"\Delta=\frac{\partial V}{\partial S}",
+        r"e^{-qT}N(d_1)", r'-e^{-qT}N(-d_1)'],
+    [r"\Gamma=\frac{\partial \Delta}{\partial S}",
+        r"e^{-qT}\frac{N'(d_1)}{S\sigma\sqrt{T}}"],
+    [r"\nu=\frac{\partial V}{\partial \sigma}",
+        r"Se^{-qT}N'(d_1)\sqrt{T}=Ke^{-rT}N'(d_2)\sqrt{T}"],
+    [r"\Theta=-\frac{\partial V}{\partial T}", r"-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}-rKe^{-rT}N(d_2)+qSe^{-qT}N(d_1)",
+     r"-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}+rKe^{-rT}N(-d_2)-qSe^{-qT}N(-d_1)"],
+    [r"\rho=\frac{\partial V}{\partial r}",
+        r"KTe^{-rT}N(d_2)", r"-KTe^{-rT}N(-d_2)"],
+    [r"Voma=\frac{\partial \nu}{\partial \sigma}",
+        r"Se^{-qT}N'(d_1)\sqrt{T}\frac{d_1 d_2}{\sigma}"],
 ]
 
-HTML_ref_1 = Environment().from_string(ref_template_1).render(output_data=ref_data_1)
-print HTML_ref_1
+HTML_ref_1 = Environment().from_string(
+    ref_template_1).render(output_data=ref_data_1)
+print(HTML_ref_1)
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -204,16 +209,16 @@ ref_template_2 = """
 """
 
 ref_data_2 = [
-	[r"\frac{\partial V}{\partial t} + rS\frac{\partial V}{\partial S} + \frac{1}{2}\sigma^2S^2\frac{\partial^2 V}{\partial S^2}=rV"],
-	[r"d_1=\frac{\log(S/K) + (r-q +\sigma^2/2)T}{\sigma \sqrt{T}}"],
-	[r"d_2=\frac{\log(S/K) + (r-q -\sigma^2/2)T}{\sigma \sqrt{T}}=d_1 - \sigma \sqrt{T - t}"],
-	[r"N(x)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x} e^{-\frac{t^{2}}{2}}dt"],
-	[r"N'(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}"]
+    [r"\frac{\partial V}{\partial t} + rS\frac{\partial V}{\partial S} + \frac{1}{2}\sigma^2S^2\frac{\partial^2 V}{\partial S^2}=rV"],
+    [r"d_1=\frac{\log(S/K) + (r-q +\sigma^2/2)T}{\sigma \sqrt{T}}"],
+    [r"d_2=\frac{\log(S/K) + (r-q -\sigma^2/2)T}{\sigma \sqrt{T}}=d_1 - \sigma \sqrt{T - t}"],
+    [r"N(x)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x} e^{-\frac{t^{2}}{2}}dt"],
+    [r"N'(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}"]
 ]
 
-HTML_ref_2 = Environment().from_string(ref_template_2).render(output_data=ref_data_2)
-print HTML_ref_2
-
+HTML_ref_2 = Environment().from_string(
+    ref_template_2).render(output_data=ref_data_2)
+print(HTML_ref_2)
 
 
 # --------------------------------------------------------------------------------------------------------
@@ -247,26 +252,22 @@ end_div = """
 
 # --------------------------------------------------------------------------------------------------------
 HTML_content = \
-	title + \
-	start_table_div + \
-		start_row_div + \
-			start_cell_div + HTML_pre_input + end_div + \
-			start_cell_div + HTML_input + end_div  + \
-		end_div + \
-		start_row_div + \
-			start_cell_div + ' ' + end_div + \
-			start_cell_div + HTML_status + end_div  + \
-		end_div + \
-		start_row_div + \
-			start_cell_div + HTML_output + end_div + \
-			start_cell_div + HTML_viz	 + end_div  + \
-		end_div + \
-	end_div + \
-	HTML_ref_1 + \
-	HTML_ref_2
+    start_table_div + \
+    start_row_div + \
+    start_cell_div + HTML_pre_input + end_div + \
+    start_cell_div + HTML_input + end_div + \
+    end_div + \
+    start_row_div + \
+    start_cell_div + ' ' + end_div + \
+    start_cell_div + HTML_status + end_div + \
+    end_div + \
+    start_row_div + \
+    start_cell_div + HTML_output + end_div + \
+    start_cell_div + HTML_viz + end_div + \
+    end_div + \
+    end_div + \
+    HTML_ref_1 + \
+    HTML_ref_2
 
 
-paperclip.copy(HTML_content)
-
-
-
+pyperclip.copy(HTML_content)

@@ -1,0 +1,525 @@
+/**
+ * CSS for Markeng Black & Scholes calculator
+ *
+ * @author Alexandre Andrieux <alexandre.andrieux@simplx.fr>
+ * @since 2017-08
+ */
+/* Generic */
+/* Common to both Standard and Dark themes */
+/* Primary */
+/* Secondary */
+/* Specific to Dark theme */
+/* Only secondary colors */
+/* Project typos */
+/* Headings and body text */
+.title-1,
+.title-2,
+.title-3,
+.title-4,
+.title-5,
+.title-6,
+.body-1,
+.body-2 {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  line-height: 1.2em;
+}
+.title-1 {
+  font-size: 46px;
+}
+.title-2 {
+  font-size: 36px;
+}
+.title-3 {
+  font-size: 30px;
+}
+.title-4 {
+  font-size: 26px;
+}
+.title-5 {
+  font-size: 20px;
+}
+.title-6 {
+  font-size: 16px;
+  font-weight: bold;
+}
+.body-1 {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 14px;
+}
+.body-2 {
+  font-size: 12px;
+}
+/* SG emphasis classes */
+/* Links */
+a {
+  line-height: 1.2em;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 14px;
+  color: #E60028;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {
+  color: #800016;
+}
+a:focus,
+a:active {
+  color: #1a0005;
+}
+a.inactive {
+  opacity: 0.3;
+}
+.dark-theme a {
+  color: #777;
+}
+.dark-theme a:hover {
+  color: #444444;
+}
+.dark-theme a:focus,
+.dark-theme a:active {
+  color: #111111;
+}
+/* Helpers */
+.uppercase {
+  text-transform: uppercase;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+.hyphenate {
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+.no-select {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
+}
+/* Default HTML tags style */
+body,
+p,
+a,
+div,
+ul,
+li,
+span,
+input,
+textarea,
+select {
+  line-height: 1.2em;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 14px;
+  color: #333333;
+}
+.dark-theme body,
+.dark-theme p,
+.dark-theme a,
+.dark-theme div,
+.dark-theme ul,
+.dark-theme li,
+.dark-theme span,
+.dark-theme input,
+.dark-theme textarea,
+.dark-theme select {
+  color: #7C7F86;
+}
+h1 {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  line-height: 1.2em;
+  font-size: 46px;
+}
+h2 {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  line-height: 1.2em;
+  font-size: 36px;
+}
+h3 {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  line-height: 1.2em;
+  font-size: 30px;
+}
+h4 {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  line-height: 1.2em;
+  font-size: 26px;
+}
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4 {
+  margin: 5px 0;
+  text-align: center;
+  color: #333333;
+}
+.dark-theme h1,
+.dark-theme .h1,
+.dark-theme h2,
+.dark-theme .h2,
+.dark-theme h3,
+.dark-theme .h3,
+.dark-theme h4,
+.dark-theme .h4 {
+  color: #7C7F86;
+}
+h3,
+h4 {
+  text-align: center;
+}
+tr td {
+  text-align: center;
+}
+p {
+  margin: 0.5em 0 0.5em;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+/* Text alignment */
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+.pointer {
+  cursor: pointer;
+}
+/* Quick layouting */
+.margin-v-large {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.margin-v {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.margin-v-small {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/* Flexbox helpers */
+.flexcol {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.ie .flexcol > * {
+  width: 100%;
+}
+.flexrow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.flexwrap {
+  flex-wrap: wrap;
+}
+.flexcenter {
+  /* Centers child elements */
+  justify-content: center;
+}
+.flexbetween {
+  /* Max space between child elements */
+  justify-content: space-between;
+}
+.flexstart {
+  /* Pull to left or top */
+  justify-content: flex-start;
+}
+.flexend {
+  /* Pull to right or bottom */
+  justify-content: flex-end;
+}
+/* Hide stuff */
+.invisible {
+  visibility: hidden;
+}
+/* Enable .containers to contain flex children */
+.container.flexrow::before,
+.container-fluid.flexrow::before,
+.container.flexcol::before,
+.container-fluid.flexcol::before,
+.container.flexrow::after,
+.container-fluid.flexrow::after,
+.container.flexcol::after,
+.container-fluid.flexcol::after {
+  content: none;
+}
+/* Line separator */
+hr {
+  border-bottom: solid 1px #CCC;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+}
+html {
+  position: relative;
+}
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+.main {
+  margin-top: 20px;
+}
+body {
+  background: #F5F5F5;
+}
+body.dark-theme {
+  background: #191E28;
+}
+.main {
+  width: 1100px;
+  margin: 20px auto;
+  background: #FFFFFF;
+  padding: 30px 15px;
+  border: solid 1px #CCC;
+}
+.dark-theme .main {
+  background: #0C111B;
+  border-color: #444852;
+}
+.sg-btn {
+  border: solid 1px #CCC;
+  background: #F5F5F5;
+  cursor: pointer;
+}
+.dark-theme .sg-btn {
+  background: #191E28;
+}
+.sg-btn.active,
+.sg-btn:hover {
+  background-color: #DDDEDF;
+}
+.dark-theme .sg-btn.active,
+.dark-theme .sg-btn:hover {
+  background-color: #2F333E;
+  color: #CCC;
+}
+/* Specific */
+.header {
+  padding: 15px;
+  background: #FFFFFF;
+  border-bottom: solid 1px #DDD;
+}
+.dark-theme .header {
+  background: #0C111B;
+  border-color: #444852;
+}
+.header .custom-title {
+  color: #333333;
+}
+.dark-theme .header .custom-title {
+  color: #CCC;
+}
+.header img.logo {
+  margin-right: 15px;
+  width: 40px;
+  height: 40px;
+}
+.dark-theme .header img.logo {
+  box-shadow: rgba(255, 255, 255, 0.4) 0 0 5px;
+  opacity: 0.8;
+}
+/* Universal rules for dark theme */
+.dark-theme * {
+  border-color: #444852 !important;
+}
+/* Theme toggle button */
+.theme-toggle {
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+}
+/* Input, preinput & output boxes */
+#input,
+#preinput,
+#output {
+  background: #F5F5F5;
+  border: solid 1px #CCC;
+}
+.dark-theme #input,
+.dark-theme #preinput,
+.dark-theme #output {
+  background: #191E28;
+}
+#input td,
+#preinput td,
+#output td,
+#input th,
+#preinput th,
+#output th {
+  font-size: 15px;
+}
+#input {
+  margin: auto;
+  margin-top: 5px;
+}
+#input .x,
+#input .y {
+  width: 10px;
+}
+#input .variable {
+  width: 70px;
+}
+#input .symbol {
+  width: 20px;
+}
+#input .current,
+#input .min,
+#input .max {
+  width: 60px;
+}
+#input .equal {
+  width: 10px;
+}
+#input .transition {
+  width: 50px;
+}
+#preinput {
+  margin: auto;
+}
+#preinput .variable {
+  width: 110px;
+}
+#preinput .value {
+  width: 60px;
+}
+#output {
+  display: inline-block;
+}
+#output .z_2D,
+#output .z_3D,
+#output .scale {
+  width: 20px;
+}
+#output .symbol {
+  width: 55px;
+}
+#output .current {
+  width: 70px;
+}
+.display_like_table {
+  display: table;
+  width: 90%;
+  margin: auto;
+}
+.display_like_row {
+  display: table-row;
+  vertical-align: middle;
+}
+.display_like_cell {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+#status {
+  font-size: 15px;
+  color: orange;
+}
+#S,
+#K,
+#T,
+#v,
+#r,
+#q,
+#Smin,
+#Kmin,
+#Tmin,
+#vmin,
+#rmin,
+#qmin,
+#Smax,
+#Kmax,
+#Tmax,
+#vmax,
+#rmax,
+#qmax {
+  width: 70px;
+}
+#slider_S,
+#slider_K,
+#slider_T,
+#slider_v,
+#slider_r,
+#slider_q {
+  width: 150px;
+}
+/* Resulting viz */
+#viz2D {
+  border: none;
+  width: 740px;
+  height: 500px;
+  display: none;
+}
+.dark-theme #viz2D .highcharts-background {
+  fill: #191E28;
+  stroke: #444852;
+}
+#viz3D {
+  border: none;
+  width: 740px;
+  height: 500px;
+  display: none;
+}
+.dark-theme #viz3D > div {
+  background: #191E28 !important;
+}
+/* Reference */
+.main h4 {
+  margin-bottom: 20px;
+  color: #333;
+}
+.dark-theme .main h4 {
+  color: #CCC;
+}
+#ref_1,
+#ref_2 {
+  font-size: 16px;
+  text-align: center;
+  margin: auto;
+  border: none;
+  color: #0C111B;
+}
+.dark-theme #ref_1,
+.dark-theme #ref_2 {
+  color: #FFFFFF;
+}
+#ref_1 tr,
+#ref_2 tr {
+  background-color: #F5F5F5;
+}
+.dark-theme #ref_1 tr,
+.dark-theme #ref_2 tr {
+  background-color: #191E28;
+}
+#ref_1 td,
+#ref_2 td {
+  padding-left: 5px;
+  padding-right: 5px;
+  border: solid 1px #CCC;
+}
+#ref_1 thead {
+  display: none;
+}
+input {
+  border: solid 1px #CCC;
+  padding: 4px 7px;
+}
+.dark-theme input {
+  background: #0C111B;
+}
