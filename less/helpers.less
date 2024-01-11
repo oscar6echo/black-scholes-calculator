@@ -1,0 +1,98 @@
+@margin-small: 15px;
+@margin: 30px;
+@margin-large: 60px;
+@border-radius: 1px;
+@padding: 15px;
+@padding-large: 30px;
+@xs-sm: 767px;
+@sm-md: 991px;
+@md-lg: 1199px;
+
+/* Text alignment */
+.center {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+.pointer {
+    cursor: pointer;
+}
+
+/* Quick layouting */
+.margin-v-large {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.margin-v {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.margin-v-small {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Flexbox helpers */
+.flexcol {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+
+    .ie & > * {
+        width: 100%; // For IE11
+    }
+}
+.flexrow {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+// Use the following together with either .flexrow or .flexcol
+// For all other flex properties, use directly 'align-self' attribute on child elements
+.flexwrap {
+    flex-wrap: wrap;
+}
+.flexcenter {
+    /* Centers child elements */
+    justify-content: center;
+}
+.flexbetween {
+    /* Max space between child elements */
+    justify-content: space-between;
+}
+.flexstart {
+    /* Pull to left or top */
+    justify-content: flex-start;
+}
+.flexend {
+    /* Pull to right or bottom */
+    justify-content: flex-end;
+}
+
+/* Hide stuff */
+.invisible {
+    visibility: hidden;
+}
+
+/* Enable .containers to contain flex children */
+.container,
+.container-fluid {
+    &.flexrow,
+    &.flexcol {
+        &::before,
+        &::after {
+            content: none;
+        }
+    }
+}
+
+/* Line separator */
+hr {
+    border-bottom: solid 1px #CCC;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+}

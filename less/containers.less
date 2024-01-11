@@ -1,0 +1,15 @@
+body {
+	background: @gray-ultra-light;
+	&.dark-theme { background: @dark-blue; }
+}
+.main {
+	width: 1100px;
+	margin: 20px auto;
+	background: @white;
+	padding: 30px 15px;
+	border: solid 1px #CCC;
+	.dark-theme & {
+		background: @dark;
+		border-color: @blue-dark2;
+	}
+}

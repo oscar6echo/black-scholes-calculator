@@ -1,0 +1,18 @@
+.sg-btn {
+	border: solid 1px #CCC;
+	background: @gray-ultra-light;
+	.pointer();
+
+	.dark-theme & {
+		background: @dark-blue;
+	}
+
+	&.active,
+	&:hover {
+		background-color: @gray-lighter;
+		.dark-theme & {
+			background-color: @blue-dark;
+			color: @gray-light;
+		}
+	}
+}

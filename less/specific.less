@@ -1,0 +1,168 @@
+/* Universal rules for dark theme */
+.dark-theme * {
+	// Using !important there to override all properties at once.
+	// There's no exception so it's ok.
+	border-color: @blue-dark2 !important;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+	padding: 0.5em 1em;
+	text-transform: uppercase;
+}
+
+/* Input, preinput & output boxes */
+#input,
+#preinput,
+#output {
+	background: @gray-ultra-light;
+	border: solid 1px #CCC;
+	.dark-theme & {
+		background: @dark-blue;
+	}
+
+	td, th {
+		font-size: 15px;
+	}
+}
+#input {
+	margin: auto;
+	margin-top: 5px;
+
+	.x,
+	.y {
+		width: 10px;
+	}
+	.variable {
+		width: 70px;
+	}
+	.symbol {
+		width: 20px;
+	}
+	.current, .min, .max {
+		width: 60px;
+	}
+	.equal {
+		width: 10px;
+	}
+	.transition {
+		width: 50px;
+	}
+}
+#preinput {
+	margin: auto;
+
+	.variable {
+		width: 110px;
+	}
+	.value {
+		width: 60px;
+	}
+}
+#output {
+	display: inline-block;
+
+	.z_2D, .z_3D, .scale {
+		width: 20px;
+	}
+	.symbol {
+		width: 55px;
+	}
+	.current {
+		width: 70px;
+	}
+}
+.display_like_table {
+	display: table;
+	width: 90%;
+	margin: auto;
+}
+.display_like_row {
+	display: table-row;
+	vertical-align: middle;
+}
+.display_like_cell {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+#status {
+	font-size: 15px;
+	color: orange;
+}
+#S, #K, #T, #v, #r, #q, #Smin, #Kmin, #Tmin, #vmin, #rmin, #qmin, #Smax, #Kmax, #Tmax, #vmax, #rmax, #qmax {
+	width: 70px;
+}
+#slider_S, #slider_K, #slider_T, #slider_v, #slider_r, #slider_q {
+	width: 150px;
+}
+
+/* Resulting viz */
+#viz2D {
+	border: none;
+	width: 740px;
+	height: 500px;
+	display: none;
+
+	.dark-theme & .highcharts-background {
+		fill: @dark-blue;
+		stroke: @blue-dark2;
+	}
+}
+#viz3D {
+	border: none;
+	width: 740px;
+	height: 500px;
+	display: none;
+
+	.dark-theme & > div {
+		background: @dark-blue !important;
+	}
+}
+
+/* Reference */
+.main h4 {
+	margin-bottom: 20px;
+	color: #333;
+
+	.dark-theme & {
+		color: #CCC;
+	}
+}
+#ref_1,
+#ref_2 {
+	font-size: 16px;
+	text-align: center;
+	margin: auto;
+	border: none;
+	color: @dark;
+
+	.dark-theme & {
+		color: @white;
+	}
+}
+#ref_1 tr,
+#ref_2 tr {
+	background-color: @gray-ultra-light;
+
+	.dark-theme & {
+		background-color: @dark-blue;
+	}
+}
+#ref_1 td,
+#ref_2 td {
+	padding-left: 5px;
+	padding-right: 5px;
+	border: solid 1px #CCC;
+}
+#ref_1 thead {
+	display: none;
+}
+input {
+	border: solid 1px #CCC;
+	padding: 4px 7px;
+
+	.dark-theme & {
+		background: @dark;
+	}
+}
