@@ -1,657 +1,1023 @@
 <!DOCTYPE html>
 <html>
-
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>Black Scholes</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <link href="./css/main.css" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+      rel="stylesheet"
+    />
+    <link href="./css/main.css" rel="stylesheet" />
 
     <script type="text/x-mathjax-config;executed=true">
-		MathJax.Hub.Config({
-			extensions: ["tex2jax.js"],
-			jax: ["input/TeX", "output/HTML-CSS"],
-			tex2jax: {
-				inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-				displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-			},
-			"HTML-CSS": { availableFonts: ["TeX"] }
-		});
-	</script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      MathJax.Hub.Config({
+      	extensions: ["tex2jax.js"],
+      	jax: ["input/TeX", "output/HTML-CSS"],
+      	tex2jax: {
+      		inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      		displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      	},
+      	"HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ></script>
     <!-- To write with math formulas, use \(..\) as delimiters for inline math symbols, and $$...$$ or \[...\] as delimiters for display style math equations -->
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <div class="header flexrow flexwrap flexbetween">
-        <div class="header-left flexrow">
-            <img class="logo" src="img/sg-logo.png" />
-            <h4 class="custom-title">Black Scholes Calculator</h4>
-        </div>
-        <div class="header-right">
-            <img src="" alt="" />
-        </div>
+      <div class="header-left flexrow">
+        <img class="logo" src="img/sg-logo.png" />
+        <h4 class="custom-title">Black Scholes Calculator</h4>
+      </div>
+      <div class="header-right">
+        <img src="" alt="" />
+      </div>
     </div>
 
     <div class="main">
-        <!-- paste create_html.py -->
+      <!-- paste create_html.py -->
 
+      <div class="display_like_table">
+        <div class="display_like_row">
+          <div class="display_like_cell">
+            <table id="preinput">
+              <thead>
+                <tr>
+                  <th class="variable"></th>
+                  <th class="value"></th>
+                  <th class="value"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Graph</td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="graph_type"
+                      value="2D"
+                      onclick="on_click_graph_type()"
+                      checked
+                    />2D
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="graph_type"
+                      value="3D"
+                      onclick="on_click_graph_type()"
+                    />3D
+                  </td>
+                </tr>
+                <tr>
+                  <td>Option</td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="option_type"
+                      value="call"
+                      onclick="on_click_option_type()"
+                      checked
+                    />Call
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="option_type"
+                      value="put"
+                      onclick="on_click_option_type()"
+                    />Put
+                  </td>
+                </tr>
+                <tr>
+                  <td>Nb steps (x, y)</td>
+                  <td colspan="2">
+                    <input
+                      id="nbstep"
+                      type="number"
+                      name="nbstep"
+                      value="200"
+                      onchange="update()"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <div class="display_like_table">
+          <div class="display_like_cell">
+            <table id="input">
+              <thead>
+                <tr>
+                  <th class="x">x</th>
+                  <th class="y">y</th>
+                  <th class="variable"></th>
+                  <th class="equal"></th>
+                  <th class="symbol"></th>
+                  <th class="current">input</th>
+                  <th class="transition"></th>
+                  <th class="min">min</th>
+                  <th class="transition"></th>
+                  <th class="max">max</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <input type="radio" name="x" value="S" onclick="update()" />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="y"
+                      value="S"
+                      onclick="update()"
+                      class="threedim"
+                    />
+                  </td>
+                  <td>Spot</td>
+                  <td>=</td>
+                  <td>\(S\)</td>
+                  <td>
+                    <input
+                      id="S"
+                      type="number"
+                      name="S"
+                      value="100"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>from</td>
+                  <td>
+                    <input
+                      id="Smin"
+                      type="number"
+                      name="Smin"
+                      value="0"
+                      step="1"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>to</td>
+                  <td>
+                    <input
+                      id="Smax"
+                      type="number"
+                      name="Smax"
+                      value="200"
+                      step="1"
+                      onchange="update()"
+                    />
+                  </td>
+                </tr>
 
-            <div class="display_like_row">
+                <tr>
+                  <td>
+                    <input type="radio" name="x" value="K" onclick="update()" />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="y"
+                      value="K"
+                      onclick="update()"
+                      class="threedim"
+                    />
+                  </td>
+                  <td>Strike</td>
+                  <td>=</td>
+                  <td>\(K\)</td>
+                  <td>
+                    <input
+                      id="K"
+                      type="number"
+                      name="K"
+                      value="100"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>from</td>
+                  <td>
+                    <input
+                      id="Kmin"
+                      type="number"
+                      name="Kmin"
+                      value="0"
+                      step="1"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>to</td>
+                  <td>
+                    <input
+                      id="Kmax"
+                      type="number"
+                      name="Kmax"
+                      value="200"
+                      step="1"
+                      onchange="update()"
+                    />
+                  </td>
+                </tr>
 
-                <div class="display_like_cell">
+                <tr>
+                  <td>
+                    <input type="radio" name="x" value="T" onclick="update()" />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="y"
+                      value="T"
+                      onclick="update()"
+                      class="threedim"
+                    />
+                  </td>
+                  <td>Mat (y)</td>
+                  <td>=</td>
+                  <td>\(T\)</td>
+                  <td>
+                    <input
+                      id="T"
+                      type="number"
+                      name="T"
+                      value="3"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>from</td>
+                  <td>
+                    <input
+                      id="Tmin"
+                      type="number"
+                      name="Tmin"
+                      value="0"
+                      step="0.1"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>to</td>
+                  <td>
+                    <input
+                      id="Tmax"
+                      type="number"
+                      name="Tmax"
+                      value="10"
+                      step="0.1"
+                      onchange="update()"
+                    />
+                  </td>
+                </tr>
 
-                    <table id="preinput">
-                        <thead>
-                            <tr>
-                                <th class="variable"></th>
-                                <th class="value"></th>
-                                <th class="value"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Graph</td>
-                                <td>
-                                    <input type="radio" name="graph_type" value="2D" onclick="on_click_graph_type()" checked>2D</td>
-                                <td>
-                                    <input type="radio" name="graph_type" value="3D" onclick="on_click_graph_type()">3D</td>
-                            </tr>
-                            <tr>
-                                <td>Option</td>
-                                <td>
-                                    <input type="radio" name="option_type" value="call" onclick="on_click_option_type()" checked>Call</td>
-                                <td>
-                                    <input type="radio" name="option_type" value="put" onclick="on_click_option_type()">Put</td>
-                            </tr>
-                            <tr>
-                                <td>Nb steps (x, y)</td>
-                                <td colspan="2">
-                                    <input id="nbstep" type="number" name="nbstep" value="200" onchange="update()">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <tr>
+                  <td>
+                    <input type="radio" name="x" value="v" onclick="update()" />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="y"
+                      value="v"
+                      onclick="update()"
+                      class="threedim"
+                    />
+                  </td>
+                  <td>Vol (%)</td>
+                  <td>=</td>
+                  <td>\(\sigma\)</td>
+                  <td>
+                    <input
+                      id="v"
+                      type="number"
+                      name="v"
+                      value="15"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>from</td>
+                  <td>
+                    <input
+                      id="vmin"
+                      type="number"
+                      name="vmin"
+                      value="0"
+                      step="1"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>to</td>
+                  <td>
+                    <input
+                      id="vmax"
+                      type="number"
+                      name="vmax"
+                      value="40"
+                      step="1"
+                      onchange="update()"
+                    />
+                  </td>
+                </tr>
 
-                </div>
+                <tr>
+                  <td>
+                    <input type="radio" name="x" value="r" onclick="update()" />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="y"
+                      value="r"
+                      onclick="update()"
+                      class="threedim"
+                    />
+                  </td>
+                  <td>Rate (%)</td>
+                  <td>=</td>
+                  <td>\(r\)</td>
+                  <td>
+                    <input
+                      id="r"
+                      type="number"
+                      name="r"
+                      value="3"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>from</td>
+                  <td>
+                    <input
+                      id="rmin"
+                      type="number"
+                      name="rmin"
+                      value="-2"
+                      step="0.5"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>to</td>
+                  <td>
+                    <input
+                      id="rmax"
+                      type="number"
+                      name="rmax"
+                      value="10"
+                      step="0.5"
+                      onchange="update()"
+                    />
+                  </td>
+                </tr>
 
-                <div class="display_like_cell">
-
-                    <table id="input">
-                        <thead>
-                            <tr>
-                                <th class="x">x</th>
-                                <th class="y">y</th>
-                                <th class="variable"></th>
-                                <th class="equal"></th>
-                                <th class="symbol"></th>
-                                <th class="current">input</th>
-                                <th class="transition"></th>
-                                <th class="min">min</th>
-                                <th class="transition"></th>
-                                <th class="max">max</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>
-                                    <input type="radio" name="x" value="S" onclick="update()">
-                                </td>
-                                <td>
-                                    <input type="radio" name="y" value="S" onclick="update()" class="threedim">
-                                </td>
-                                <td>Spot</td>
-                                <td>=</td>
-                                <td>\(S\)</td>
-                                <td>
-                                    <input id="S" type="number" name="S" value="100" onchange="update()">
-                                </td>
-                                <td>from</td>
-                                <td>
-                                    <input id="Smin" type="number" name="Smin" value="0" step="1" onchange="update()">
-                                </td>
-                                <td>to</td>
-                                <td>
-                                    <input id="Smax" type="number" name="Smax" value="200" step="1" onchange="update()">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="radio" name="x" value="K" onclick="update()">
-                                </td>
-                                <td>
-                                    <input type="radio" name="y" value="K" onclick="update()" class="threedim">
-                                </td>
-                                <td>Strike</td>
-                                <td>=</td>
-                                <td>\(K\)</td>
-                                <td>
-                                    <input id="K" type="number" name="K" value="100" onchange="update()">
-                                </td>
-                                <td>from</td>
-                                <td>
-                                    <input id="Kmin" type="number" name="Kmin" value="0" step="1" onchange="update()">
-                                </td>
-                                <td>to</td>
-                                <td>
-                                    <input id="Kmax" type="number" name="Kmax" value="200" step="1" onchange="update()">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="radio" name="x" value="T" onclick="update()">
-                                </td>
-                                <td>
-                                    <input type="radio" name="y" value="T" onclick="update()" class="threedim">
-                                </td>
-                                <td>Mat (y)</td>
-                                <td>=</td>
-                                <td>\(T\)</td>
-                                <td>
-                                    <input id="T" type="number" name="T" value="3" onchange="update()">
-                                </td>
-                                <td>from</td>
-                                <td>
-                                    <input id="Tmin" type="number" name="Tmin" value="0" step="0.1" onchange="update()">
-                                </td>
-                                <td>to</td>
-                                <td>
-                                    <input id="Tmax" type="number" name="Tmax" value="10" step="0.1" onchange="update()">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="radio" name="x" value="v" onclick="update()">
-                                </td>
-                                <td>
-                                    <input type="radio" name="y" value="v" onclick="update()" class="threedim">
-                                </td>
-                                <td>Vol (%)</td>
-                                <td>=</td>
-                                <td>\(\sigma\)</td>
-                                <td>
-                                    <input id="v" type="number" name="v" value="15" onchange="update()">
-                                </td>
-                                <td>from</td>
-                                <td>
-                                    <input id="vmin" type="number" name="vmin" value="0" step="1" onchange="update()">
-                                </td>
-                                <td>to</td>
-                                <td>
-                                    <input id="vmax" type="number" name="vmax" value="40" step="1" onchange="update()">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="radio" name="x" value="r" onclick="update()">
-                                </td>
-                                <td>
-                                    <input type="radio" name="y" value="r" onclick="update()" class="threedim">
-                                </td>
-                                <td>Rate (%)</td>
-                                <td>=</td>
-                                <td>\(r\)</td>
-                                <td>
-                                    <input id="r" type="number" name="r" value="3" onchange="update()">
-                                </td>
-                                <td>from</td>
-                                <td>
-                                    <input id="rmin" type="number" name="rmin" value="-2" step="0.5" onchange="update()">
-                                </td>
-                                <td>to</td>
-                                <td>
-                                    <input id="rmax" type="number" name="rmax" value="10" step="0.5" onchange="update()">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="radio" name="x" value="q" onclick="update()">
-                                </td>
-                                <td>
-                                    <input type="radio" name="y" value="q" onclick="update()" class="threedim">
-                                </td>
-                                <td>Div (%)</td>
-                                <td>=</td>
-                                <td>\(q\)</td>
-                                <td>
-                                    <input id="q" type="number" name="q" value="0" onchange="update()">
-                                </td>
-                                <td>from</td>
-                                <td>
-                                    <input id="qmin" type="number" name="qmin" value="-2" step="0.5" onchange="update()">
-                                </td>
-                                <td>to</td>
-                                <td>
-                                    <input id="qmax" type="number" name="qmax" value="5" step="0.5" onchange="update()">
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-            <div class="display_like_row">
-
-                <div class="display_like_cell">
-
-                </div>
-
-                <div class="display_like_cell">
-
-                    <p id="status">Status: Missing input</p>
-
-                </div>
-
-            </div>
-
-            <div class="display_like_row">
-
-                <div class="display_like_cell">
-
-                    <table id="output">
-                        <thead>
-                            <tr>
-                                <th class="z">z</th>
-                                <th class="axis">axis</th>
-                                <th class="symbol"></th>
-                                <th class="equal"></th>
-                                <th class="current">output</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="d1" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="d1" onclick="update()" class="invisible">
-                                </td>
-                                <td id="d1_variable">\(d_1\)</td>
-                                <td>=</td>
-                                <td id="d1_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="N_d1_call" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="N_d1_call" onclick="update()" class="invisible">
-                                </td>
-                                <td id="N_d1_call_variable">\(N(d_1)\)</td>
-                                <td>=</td>
-                                <td id="N_d1_call_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="N_d1_put" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="N_d1_put" onclick="update()" class="invisible">
-                                </td>
-                                <td id="N_d1_put_variable">\(N(-d_1)\)</td>
-                                <td>=</td>
-                                <td id="N_d1_put_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="N_prime_d1" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="N_prime_d1" onclick="update()" class="invisible">
-                                </td>
-                                <td id="N_prime_d1_variable">\(N'(d_1)\)</td>
-                                <td>=</td>
-                                <td id="N_prime_d1_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="d2" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="d2" onclick="update()" class="invisible">
-                                </td>
-                                <td id="d2_variable">\(d_2\)</td>
-                                <td>=</td>
-                                <td id="d2_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="N_d2_call" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="N_d2_call" onclick="update()" class="invisible">
-                                </td>
-                                <td id="N_d2_call_variable">\(N(d_2)\)</td>
-                                <td>=</td>
-                                <td id="N_d2_call_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="N_d2_put" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="N_d2_put" onclick="update()" class="invisible">
-                                </td>
-                                <td id="N_d2_put_variable">\(N(-d_2)\)</td>
-                                <td>=</td>
-                                <td id="N_d2_put_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="N_prime_d2" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="N_prime_d2" onclick="update()" class="invisible">
-                                </td>
-                                <td id="N_prime_d2_variable">\(N'(d_2)\)</td>
-                                <td>=</td>
-                                <td id="N_prime_d2_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="PV" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="PV" onclick="update()" class="invisible">
-                                </td>
-                                <td id="PV_variable">\(e^{-rT}\)</td>
-                                <td>=</td>
-                                <td id="PV_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="PV_K" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="PV_K" onclick="update()" class="invisible">
-                                </td>
-                                <td id="PV_K_variable">\(e^{-rT}K\)</td>
-                                <td>=</td>
-                                <td id="PV_K_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="value" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="value" onclick="update()" class="invisible">
-                                </td>
-                                <td id="value_variable">\(V\)</td>
-                                <td>=</td>
-                                <td id="value_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="delta" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="delta" onclick="update()" class="invisible">
-                                </td>
-                                <td id="delta_variable">\(\Delta\)</td>
-                                <td>=</td>
-                                <td id="delta_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="gamma" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="gamma" onclick="update()" class="invisible">
-                                </td>
-                                <td id="gamma_variable">\(\Gamma\)</td>
-                                <td>=</td>
-                                <td id="gamma_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="vega" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="vega" onclick="update()" class="invisible">
-                                </td>
-                                <td id="vega_variable">\(\nu\)</td>
-                                <td>=</td>
-                                <td id="vega_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="theta" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="theta" onclick="update()" class="invisible">
-                                </td>
-                                <td id="theta_variable">\(\Theta\)</td>
-                                <td>=</td>
-                                <td id="theta_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="rho" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="rho" onclick="update()" class="invisible">
-                                </td>
-                                <td id="rho_variable">\(\rho\)</td>
-                                <td>=</td>
-                                <td id="rho_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="voma" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="voma" onclick="update()" class="invisible">
-                                </td>
-                                <td id="voma_variable">\(voma\)</td>
-                                <td>=</td>
-                                <td id="voma_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="payoff" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="payoff" onclick="update()" class="invisible">
-                                </td>
-                                <td id="payoff_variable">\(Payoff\)</td>
-                                <td>=</td>
-                                <td id="payoff_value"></td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="z" value="PV_payoff" onclick="on_click_z(this)">
-                                </td>
-                                <td>
-                                    <input type="radio" name="axis" value="PV_payoff" onclick="update()" class="invisible">
-                                </td>
-                                <td id="PV_payoff_variable">\(e^{-rT}Payoff\)</td>
-                                <td>=</td>
-                                <td id="PV_payoff_value"></td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="display_like_cell">
-
-                    <div id="viz2D"></div>
-                    <div id="viz3D"></div>
-
-                </div>
-
-            </div>
-
+                <tr>
+                  <td>
+                    <input type="radio" name="x" value="q" onclick="update()" />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="y"
+                      value="q"
+                      onclick="update()"
+                      class="threedim"
+                    />
+                  </td>
+                  <td>Div (%)</td>
+                  <td>=</td>
+                  <td>\(q\)</td>
+                  <td>
+                    <input
+                      id="q"
+                      type="number"
+                      name="q"
+                      value="0"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>from</td>
+                  <td>
+                    <input
+                      id="qmin"
+                      type="number"
+                      name="qmin"
+                      value="-2"
+                      step="0.5"
+                      onchange="update()"
+                    />
+                  </td>
+                  <td>to</td>
+                  <td>
+                    <input
+                      id="qmax"
+                      type="number"
+                      name="qmax"
+                      value="5"
+                      step="0.5"
+                      onchange="update()"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <br>
-        <br>
-        <br>
-        <h4>Reference</h4>
-        <table id="ref_1">
-            <thead>
+        <div class="display_like_row">
+          <div class="display_like_cell"></div>
+
+          <div class="display_like_cell">
+            <p id="status">Status: Missing input</p>
+          </div>
+        </div>
+
+        <div class="display_like_row">
+          <div class="display_like_cell">
+            <table id="output">
+              <thead>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                  <th class="z">z</th>
+                  <th class="axis">axis</th>
+                  <th class="symbol"></th>
+                  <th class="equal"></th>
+                  <th class="current">output</th>
                 </tr>
-            </thead>
-            <tbody>
-
+              </thead>
+              <tbody>
                 <tr>
-
-                    <td>\[Option\]</td>
-                    <td>\[Call\]</td>
-                    <td>\[Put\]</td>
-
-                </tr>
-
-                <tr>
-
-                    <td>\[Payoff\]</td>
-                    <td>\[Max(0, S-K)\]</td>
-                    <td>\[Max(0, K-S)\]</td>
-
-                </tr>
-
-                <tr>
-
-                    <td>\[Value=V\]</td>
-                    <td>\[Se^{-qT}N(d_1)-Ke^{-rT}N(d_2)\]</td>
-                    <td>\[Ke^{-rT}N(-d_2)-Se^{-qT}N(-d_1)\]</td>
-
-                </tr>
-
-                <tr>
-
-                    <td>\[\Delta=\frac{\partial V}{\partial S}\]</td>
-                    <td>\[e^{-qT}N(d_1)\]</td>
-                    <td>\[-e^{-qT}N(-d_1)\]</td>
-
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="d1"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="d1"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="d1_variable">\(d_1\)</td>
+                  <td>=</td>
+                  <td id="d1_value"></td>
                 </tr>
 
                 <tr>
-
-                    <td>\[\Gamma=\frac{\partial \Delta}{\partial S}\]</td>
-                    <td colspan="2">\[e^{-qT}\frac{N'(d_1)}{S\sigma\sqrt{T}}\]</td>
-
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="N_d1_call"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="N_d1_call"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="N_d1_call_variable">\(N(d_1)\)</td>
+                  <td>=</td>
+                  <td id="N_d1_call_value"></td>
                 </tr>
 
                 <tr>
-
-                    <td>\[\nu=\frac{\partial V}{\partial \sigma}\]</td>
-                    <td colspan="2">\[Se^{-qT}N'(d_1)\sqrt{T}=Ke^{-rT}N'(d_2)\sqrt{T}\]</td>
-
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="N_d1_put"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="N_d1_put"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="N_d1_put_variable">\(N(-d_1)\)</td>
+                  <td>=</td>
+                  <td id="N_d1_put_value"></td>
                 </tr>
 
                 <tr>
-
-                    <td>\[\Theta=-\frac{\partial V}{\partial T}\]</td>
-                    <td>\[-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}-rKe^{-rT}N(d_2)+qSe^{-qT}N(d_1)\]</td>
-                    <td>\[-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}+rKe^{-rT}N(-d_2)-qSe^{-qT}N(-d_1)\]</td>
-
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="N_prime_d1"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="N_prime_d1"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="N_prime_d1_variable">\(N'(d_1)\)</td>
+                  <td>=</td>
+                  <td id="N_prime_d1_value"></td>
                 </tr>
 
                 <tr>
-
-                    <td>\[\rho=\frac{\partial V}{\partial r}\]</td>
-                    <td>\[KTe^{-rT}N(d_2)\]</td>
-                    <td>\[-KTe^{-rT}N(-d_2)\]</td>
-
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="d2"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="d2"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="d2_variable">\(d_2\)</td>
+                  <td>=</td>
+                  <td id="d2_value"></td>
                 </tr>
 
                 <tr>
-
-                    <td>\[Voma=\frac{\partial \nu}{\partial \sigma}\]</td>
-                    <td colspan="2">\[Se^{-qT}N'(d_1)\sqrt{T}\frac{d_1 d_2}{\sigma}\]</td>
-
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="N_d2_call"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="N_d2_call"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="N_d2_call_variable">\(N(d_2)\)</td>
+                  <td>=</td>
+                  <td id="N_d2_call_value"></td>
                 </tr>
 
-            </tbody>
-        </table>
-        <table id="ref_2">
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="N_d2_put"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="N_d2_put"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="N_d2_put_variable">\(N(-d_2)\)</td>
+                  <td>=</td>
+                  <td id="N_d2_put_value"></td>
+                </tr>
 
-            <tr>
-                <td>\[\frac{\partial V}{\partial t} + rS\frac{\partial V}{\partial S} + \frac{1}{2}\sigma^2S^2\frac{\partial^2
-                    V}{\partial S^2}=rV\]</td>
-            </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="N_prime_d2"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="N_prime_d2"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="N_prime_d2_variable">\(N'(d_2)\)</td>
+                  <td>=</td>
+                  <td id="N_prime_d2_value"></td>
+                </tr>
 
-            <tr>
-                <td>\[d_1=\frac{\log(S/K) + (r-q +\sigma^2/2)T}{\sigma \sqrt{T}}\]</td>
-            </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="PV"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="PV"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="PV_variable">\(e^{-rT}\)</td>
+                  <td>=</td>
+                  <td id="PV_value"></td>
+                </tr>
 
-            <tr>
-                <td>\[d_2=\frac{\log(S/K) + (r-q -\sigma^2/2)T}{\sigma \sqrt{T}}=d_1 - \sigma \sqrt{T - t}\]</td>
-            </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="PV_K"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="PV_K"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="PV_K_variable">\(e^{-rT}K\)</td>
+                  <td>=</td>
+                  <td id="PV_K_value"></td>
+                </tr>
 
-            <tr>
-                <td>\[N(x)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x} e^{-\frac{t^{2}}{2}}dt\]</td>
-            </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="value"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="value"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="value_variable">\(V\)</td>
+                  <td>=</td>
+                  <td id="value_value"></td>
+                </tr>
 
-            <tr>
-                <td>\[N'(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\]</td>
-            </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="delta"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="delta"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="delta_variable">\(\Delta\)</td>
+                  <td>=</td>
+                  <td id="delta_value"></td>
+                </tr>
 
-        </table>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="gamma"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="gamma"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="gamma_variable">\(\Gamma\)</td>
+                  <td>=</td>
+                  <td id="gamma_value"></td>
+                </tr>
 
-        <!-- end paste -->
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="vega"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="vega"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="vega_variable">\(\nu\)</td>
+                  <td>=</td>
+                  <td id="vega_value"></td>
+                </tr>
 
-    </div>div>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="theta"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="theta"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="theta_variable">\(\Theta\)</td>
+                  <td>=</td>
+                  <td id="theta_value"></td>
+                </tr>
 
-</body>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="rho"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="rho"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="rho_variable">\(\rho\)</td>
+                  <td>=</td>
+                  <td id="rho_value"></td>
+                </tr>
 
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="voma"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="voma"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="voma_variable">\(voma\)</td>
+                  <td>=</td>
+                  <td id="voma_value"></td>
+                </tr>
 
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="payoff"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="payoff"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="payoff_variable">\(Payoff\)</td>
+                  <td>=</td>
+                  <td id="payoff_value"></td>
+                </tr>
 
-<!-- <script src="https://rawgithub.com/highslide-software/highcharts.com/master/js/adapters/standalone-framework.src.js"></script> -->
-<!-- <script src="http://code.highcharts.com/adapters/standalone-framework.js"></script> -->
-<!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
-<!-- <script src="http://code.highcharts.com/modules/exporting.js"></script> -->
-<script src="Highcharts-3.0.10/js/adapters/standalone-framework.js"></script>
-<script src="Highcharts-3.0.10/js/highcharts.js"></script>
-<script src="Highcharts-3.0.10/js/modules/exporting.js"></script>
-<script src="http://highcharts.github.io/export-csv/export-csv.js"></script>
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name="z"
+                      value="PV_payoff"
+                      onclick="on_click_z(this)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="axis"
+                      value="PV_payoff"
+                      onclick="update()"
+                      class="invisible"
+                    />
+                  </td>
+                  <td id="PV_payoff_variable">\(e^{-rT}Payoff\)</td>
+                  <td>=</td>
+                  <td id="PV_payoff_value"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
+          <div class="display_like_cell">
+            <div id="viz2D"></div>
+            <div id="viz3D"></div>
+          </div>
+        </div>
+      </div>
 
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript" src="CHAP/graph3d-1.2/graph3d.js"></script>
+      <br />
+      <br />
+      <br />
+      <h4>Reference</h4>
+      <table id="ref_1">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>\[Option\]</td>
+            <td>\[Call\]</td>
+            <td>\[Put\]</td>
+          </tr>
 
-<script src="js/blackscholes.js"></script>
-<script src="js/viz2D.js"></script>
-<script src="js/viz3D.js"></script>
-<script src="js/ui.js"></script>
+          <tr>
+            <td>\[Payoff\]</td>
+            <td>\[Max(0, S-K)\]</td>
+            <td>\[Max(0, K-S)\]</td>
+          </tr>
 
+          <tr>
+            <td>\[Value=V\]</td>
+            <td>\[Se^{-qT}N(d_1)-Ke^{-rT}N(d_2)\]</td>
+            <td>\[Ke^{-rT}N(-d_2)-Se^{-qT}N(-d_1)\]</td>
+          </tr>
 
+          <tr>
+            <td>\[\Delta=\frac{\partial V}{\partial S}\]</td>
+            <td>\[e^{-qT}N(d_1)\]</td>
+            <td>\[-e^{-qT}N(-d_1)\]</td>
+          </tr>
+
+          <tr>
+            <td>\[\Gamma=\frac{\partial \Delta}{\partial S}\]</td>
+            <td colspan="2">\[e^{-qT}\frac{N'(d_1)}{S\sigma\sqrt{T}}\]</td>
+          </tr>
+
+          <tr>
+            <td>\[\nu=\frac{\partial V}{\partial \sigma}\]</td>
+            <td colspan="2">
+              \[Se^{-qT}N'(d_1)\sqrt{T}=Ke^{-rT}N'(d_2)\sqrt{T}\]
+            </td>
+          </tr>
+
+          <tr>
+            <td>\[\Theta=-\frac{\partial V}{\partial T}\]</td>
+            <td>
+              \[-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}-rKe^{-rT}N(d_2)+qSe^{-qT}N(d_1)\]
+            </td>
+            <td>
+              \[-e^{qT}\frac{SN'(d_1)\sigma}{2\sqrt{T}}+rKe^{-rT}N(-d_2)-qSe^{-qT}N(-d_1)\]
+            </td>
+          </tr>
+
+          <tr>
+            <td>\[\rho=\frac{\partial V}{\partial r}\]</td>
+            <td>\[KTe^{-rT}N(d_2)\]</td>
+            <td>\[-KTe^{-rT}N(-d_2)\]</td>
+          </tr>
+
+          <tr>
+            <td>\[Voma=\frac{\partial \nu}{\partial \sigma}\]</td>
+            <td colspan="2">
+              \[Se^{-qT}N'(d_1)\sqrt{T}\frac{d_1 d_2}{\sigma}\]
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table id="ref_2">
+        <tr>
+          <td>
+            \[\frac{\partial V}{\partial t} + rS\frac{\partial V}{\partial S} +
+            \frac{1}{2}\sigma^2S^2\frac{\partial^2 V}{\partial S^2}=rV\]
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            \[d_1=\frac{\log(S/K) + (r-q +\sigma^2/2)T}{\sigma \sqrt{T}}\]
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            \[d_2=\frac{\log(S/K) + (r-q -\sigma^2/2)T}{\sigma \sqrt{T}}=d_1 -
+            \sigma \sqrt{T - t}\]
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            \[N(x)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{x}
+            e^{-\frac{t^{2}}{2}}dt\]
+          </td>
+        </tr>
+
+        <tr>
+          <td>\[N'(x)=\frac{1}{\sqrt{2\pi}}e^{-\frac{x^{2}}{2}}\]</td>
+        </tr>
+      </table>
+
+      <!-- end paste -->
+    </div>
+    div>
+  </body>
+
+  <!-- <script src="https://rawgithub.com/highslide-software/highcharts.com/master/js/adapters/standalone-framework.src.js"></script> -->
+  <!-- <script src="https://code.highcharts.com/adapters/standalone-framework.js"></script> -->
+  <!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+  <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+  <script src="Highcharts-3.0.10/js/adapters/standalone-framework.js"></script>
+  <script src="Highcharts-3.0.10/js/highcharts.js"></script>
+  <script src="Highcharts-3.0.10/js/modules/exporting.js"></script>
+  <script src="https://highcharts.github.io/export-csv/export-csv.js"></script>
+
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="CHAP/graph3d-1.2/graph3d.js"></script>
+
+  <script src="js/blackscholes.js"></script>
+  <script src="js/viz2D.js"></script>
+  <script src="js/viz3D.js"></script>
+  <script src="js/ui.js"></script>
 </html>
